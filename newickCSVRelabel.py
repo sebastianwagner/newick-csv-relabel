@@ -11,18 +11,18 @@ import logging
 def reportMappings(mappedstrings):
     for name in mappedstrings:
         if mappedstrings[name] > 1:
-            log.warning('mapped sting: "%s" %d time(s)' % (name, mappedstrings[name]))
+            log.warning('mapped sting: "%s" %d time(s)', (name, mappedstrings[name]))
     for name in mappedstrings:
         if mappedstrings[name] == 1:
-            log.debug('once mapped sting: "%s"' % (name))
+            log.debug('once mapped sting: "%s"', name)
     for name in mappedstrings:
         if mappedstrings[name] <= 0:
-            log.info('never mapped sting: %s' % name)
+            log.info('never mapped sting: %s', name)
 
 
 def fixname(name):
     if name in mappings:
-        log.debug('mapping name "%s" to "%s"' % (name, mappings[name]))
+        log.debug('mapping name "%s" to "%s"', (name, mappings[name]))
         # checks keys
         if name in mappedstrings:
             mappedstrings[name] += 1
@@ -36,7 +36,7 @@ def fixname(name):
 def relabel(clade):
     if clade.name:
         if clade.confidence is not None:
-            log.warning('Clade with "confidence value of "%f" got also name "%s". Overwriting.' % (
+            log.warning('Clade with "confidence value of "%f" got also name "%s". Overwriting.', (
                 clade.name,
                 clade.confidence
             ))
@@ -74,13 +74,13 @@ def readmappings(mappingfile):
                 code, name = line.split(',', 1)
             except ValueError:
                 # todo collect ignorable items
-                log.warning('Ignoring line with "%s" from mappingsfile' % line)
+                log.warning('Ignoring line with "%s" from mappingsfile', line)
                 continue
             if code and name:
                 if code not in mappings.values():
                     mappings[code] = name
                 else:
-                    log.error('mappingfile contains possible loop: code "%s" already in values' % code)
+                    log.error('mappingfile contains possible loop: code "%s" already in values', code)
     if len(mappings) <= 0:
         log.warning("empty mappings file")
     return mappings
