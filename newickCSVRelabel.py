@@ -44,7 +44,12 @@ def readmappings(mappingfile):
     handle = open(mappingfile)
     if(handle):
         for line in handle:
-            code, name = line.rstrip().split(',', 1)
+            line = line.rstrip()
+            try:
+                code, name = line.split(',', 1)
+            except ValueError:
+                # todo collect ignorable items
+                continue
             if code and name:
                 mappings[code] = name
     return mappings
