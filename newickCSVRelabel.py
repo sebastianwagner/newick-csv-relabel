@@ -17,7 +17,7 @@ def reportMappings(mappedstrings):
             log.debug('once mapped sting: "%s"', name)
     for name in mappedstrings:
         if mappedstrings[name] <= 0:
-            log.info('never mapped sting: %s', name)
+            print('%s,' % name, file=sys.stderr)
 
 
 def fixname(name):
