@@ -56,10 +56,15 @@ def readmappings(mappingfile):
                 code, name = line.split(',', 1)
             except ValueError:
                 # todo collect ignorable items
+                log.warning('Ignoring line with "%s" from mappingsfile' % line)
                 continue
             if code and name:
                 if code not in mappings.values():
                     mappings[code] = name
+                else:
+                    log.error('mappingfile contains possible loop: code "%s" already in values' % code)
+    if len(mappings) <= 0:
+        log.warning("empty mappings file")
     return mappings
 
 def printtrees(trees):
