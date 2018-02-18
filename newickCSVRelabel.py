@@ -17,6 +17,11 @@ def fixname(name):
 
 def relabel(clade):
     if clade.name:
+        if clade.confidence is not None:
+            log.warning('Clade with "confidence value of "%f" got also name "%s". Overwriting.' % (
+                clade.name,
+                clade.confidence
+            ))
         clade.name = fixname(clade.name)
     # fix broken confidence writer when working with PAUP* style files.
     # TreeGraph could not handle confidence behind colons
