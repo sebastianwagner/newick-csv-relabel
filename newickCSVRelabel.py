@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+# -*- coding: utf-8 -*-
 
 from Bio import Phylo
 from Bio.Phylo import NewickIO  # directly called due to stdout usage
 import sys
+import logging
 
 
 
@@ -58,6 +60,15 @@ def readmappings(mappingfile):
 def printtrees(trees):
     for tree in trees:
         Phylo.draw_ascii(tree)
+
+stdout_handler = logging.StreamHandler(sys.stderr)
+handlers = [stdout_handler]
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)s - %(message)s]',
+    handlers=handlers
+)
+log = logging.getLogger('LOGGER_NAME')
 
 mappingfile = sys.argv[2]
 mappings = readmappings(mappingfile)
