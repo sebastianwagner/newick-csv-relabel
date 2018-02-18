@@ -51,7 +51,8 @@ def readmappings(mappingfile):
                 # todo collect ignorable items
                 continue
             if code and name:
-                mappings[code] = name
+                if code not in mappings.values():
+                    mappings[code] = name
     return mappings
 
 def printtrees(trees):
