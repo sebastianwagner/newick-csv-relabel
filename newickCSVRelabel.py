@@ -8,11 +8,29 @@ import sys
 import logging
 
 
+def reportMappings(mappedstrings):
+    for name in mappedstrings:
+        if mappedstrings[name] > 1:
+            log.warning('mapped sting: "%s" %d time(s)' % (name, mappedstrings[name]))
+    for name in mappedstrings:
+        if mappedstrings[name] == 1:
+            log.debug('once mapped sting: "%s"' % (name))
+    for name in mappedstrings:
+        if mappedstrings[name] <= 0:
+            log.info('never mapped sting: %s' % name)
+
 
 def fixname(name):
     if name in mappings:
+        log.debug('mapping name "%s" to "%s"' % (name, mappings[name]))
+        # checks keys
+        if name in mappedstrings:
+            mappedstrings[name] += 1
+        else:
+            mappedstrings[name] = 1
         return mappings[name]
     else:
+        mappedstrings[name] = 0
         return name
 
 def relabel(clade):
@@ -82,11 +100,13 @@ log = logging.getLogger('LOGGER_NAME')
 
 mappingfile = sys.argv[2]
 mappings = readmappings(mappingfile)
+mappedstrings = {}
 
 treefile = sys.argv[1]
 trees = readtrees(treefile)
 
 trees = relabeltree(trees)
+reportMappings(mappedstrings)
 #printtees(trees)
 
 
